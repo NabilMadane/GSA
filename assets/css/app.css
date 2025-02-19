@@ -1,0 +1,19 @@
+.styled-list {
+    list-style: none;
+    padding: 0;
+}
+
+.styled-list li {
+    background: #b7c4d3;
+    color: white;
+    padding: 7px 20px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.styled-list li:hover {
+    background: #2980b9;
+}

@@ -94,13 +94,14 @@ $(document).ready(function(){
 
 	}).on("click", ".deleteDossier", function(){
 		var patientId = $(this).attr("data-patientid"),
+			ref = $(this).attr("data-ref"),
 			hitURL = baseURL + "dossier/deleteDossier",
 			currentRow = $(this);
 
 		var confirmation = confirm("Êtes-vous sûr de supprimer ce dossier ?");
 
 		if (confirmation) {
-			$.post(hitURL, { patientId: patientId }, function(data) {
+			$.post(hitURL, { ref,patientId }, function(data) {
 				console.log(data);
 				if (data.status === true) {
 					alert("Dossier supprimé avec succès");
@@ -112,8 +113,37 @@ $(document).ready(function(){
 				}
 			}, "json");
 		}
-	});
+	}).on("keyup","#first_name", function () {
+		let hitURL = baseURL + "dossier/search";
+		let query = $(this).val();
+		if (query.length > 2) {
 
+			$.post(hitURL, { query },
+				function(rep) {
+				if (rep) {
+					$("#patientList").html(rep);
+				} else {
+					$("#patientList").html("");
+				}
+			});
+
+		} else {
+			$("#patientList").html("");
+		}
+	}).on("click", ".patient-option", function () {
+		let patientId = $(this).attr("data-id");
+		let firstName = $(this).attr("data-firstName");
+		let lastName = $(this).attr("data-lastName");
+		let age = $(this).attr("data-age");
+		let phone = $(this).attr("data-phone");
+		$("#patientId").val(patientId);
+		$("#first_name").val(firstName);
+		$("#last_name").val(lastName);
+		$("#age").val(age);
+		$("#phone").val(phone);
+		$("#patientList").html("");
+
+	});
 })();
 
 //dashboard

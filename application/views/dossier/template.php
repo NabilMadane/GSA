@@ -78,7 +78,7 @@
 <body>
 
 <table>
-    <caption>Dossier Listing</caption>
+    <caption></caption>
     <thead>
     <tr>
         <th>Noms et Prénom</th>

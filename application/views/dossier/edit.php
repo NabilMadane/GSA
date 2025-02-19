@@ -1,5 +1,6 @@
 <?php
 $dossierId = $dossierInfo->id;
+$ref = $dossierInfo->ref;
 $first_name = $dossierInfo->first_name;
 $last_name = $dossierInfo->last_name;
 $age = $dossierInfo->age;
@@ -35,6 +36,7 @@ $reduction = $dossierInfo->reduction;
                     <!-- form start -->
 
                     <form role="form" action="<?php echo base_url() ?>dossier/editDossier" method="post" id="editAnalyse" role="form">
+                        <input type="hidden" id="ref" name="ref" value="<?= $ref ?>">
                         <input type="hidden" id="dossierId" name="dossierId" value="<?= $dossierId ?>">
                         <input type="hidden" id="patientId" name="patientId" value="<?= $patientId ?>">
                         <div class="box-body">
@@ -50,6 +52,21 @@ $reduction = $dossierInfo->reduction;
                                     <div class="form-group">
                                         <label for="last_name">Prénom</label>
                                         <input type="text" class="form-control required" value="<?= $last_name ?>" id="last_name" name="last_name" maxlength="256" />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="age">Age</label>
+                                        <input type="number" class="form-control required" value="<?= $age ?>" id="age" name="age" maxlength="256" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dossier_name">Téléphone</label>
+                                        <input type="text" class="form-control required" value="<?= $phone ?>" id="phone" name="phone" maxlength="256" />
                                     </div>
 
                                 </div>
@@ -80,20 +97,6 @@ $reduction = $dossierInfo->reduction;
 
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="age">Age</label>
-                                        <input type="number" class="form-control required" value="<?= $age ?>" id="age" name="age" maxlength="256" />
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="dossier_name">Téléphone</label>
-                                        <input type="text" class="form-control required" value="<?= $phone ?>" id="phone" name="phone" maxlength="256" />
-                                    </div>
-
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">

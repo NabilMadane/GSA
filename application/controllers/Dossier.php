@@ -102,17 +102,18 @@ class Dossier extends BaseController
                 $age = $this->security->xss_clean($this->input->post('age'));
                 $phone = $this->security->xss_clean($this->input->post('phone'));
                 $description = $this->security->xss_clean($this->input->post('description'));
+                $patientId = $this->security->xss_clean($this->input->post('patientId'));
                 $analyses = $this->input->post('analyses');
                 $date = $this->input->post('date');
                 $labo = $this->input->post('labos');
                 $reduction = $this->input->post('reduction');
 
 
-                $patientInfo = array('first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'phone' => $phone, 'description' => $description);
-                $dossiertInfo = (object)['reduction' => $reduction, 'date' => $date];
+                $patientInfo = array('first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'phone' => $phone);
+                $dossiertInfo = (object)['reduction' => $reduction, 'date' => $date,'description' => $description];
 
 
-                $result = $this->bm->addNewDossier($analyses, $patientInfo,$labo,$dossiertInfo);
+                $result = $this->bm->addNewDossier($analyses, $patientInfo,$labo,$dossiertInfo,$patientId);
 
                 if ($result > 0) {
                     $this->session->set_flashdata('success', 'Nouveau dossier créé avec succès');
@@ -130,20 +131,20 @@ class Dossier extends BaseController
      * This function is used load dossier edit information
      * @param number $dossierId : Optional : This is dossier id
      */
-    function edit($patient_id = NULL)
+    function edit($ref = NULL)
     {
         if (!$this->hasUpdateAccess()) {
             $this->loadThis();
         } else {
-            if ($patient_id == null) {
+            if ($ref == null) {
                 redirect('dossier/dossierListing');
             }
 
-            $data['dossierInfo'] = $this->bm->getDossierInfo($patient_id);
+            $data['dossierInfo'] = $this->bm->getDossierInfo($ref);
 
             $data['analyses'] = $this->bm->getAnalyses();
             $data['labos'] = $this->bm->getLabo();
-            $data['selected_analyses_ids'] = $this->bm->getSelectedAnalyses($patient_id);
+            $data['selected_analyses_ids'] = $this->bm->getSelectedAnalyses($ref);
             $this->global['pageTitle'] = 'GSA : Edit Dossier';
 
             $this->loadViews("dossier/edit", $this->global, $data, NULL);
@@ -166,6 +167,7 @@ class Dossier extends BaseController
 
             $dossierId = $this->input->post('dossierId');
             $patientId = $this->input->post('patientId');
+            $ref = $this->input->post('ref');
 
 
 
@@ -182,11 +184,11 @@ class Dossier extends BaseController
                 $labo = $this->input->post('labos');
                 $reduction = $this->input->post('reduction');
 
-                $patientInfo = array('first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'phone' => $phone, 'description' => $description);
-                $dossiertInfo = (object)['reduction' => $reduction, 'date' => $date];
+                $patientInfo = array('first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'phone' => $phone);
+                $dossiertInfo = (object)['reduction' => $reduction, 'date' => $date,'description' => $description];
 
 
-                $result = $this->bm->editDossier($analyses, $patientInfo, $patientId,$labo,$dossiertInfo);
+                $result = $this->bm->editDossier($analyses, $patientInfo, $patientId,$labo,$dossiertInfo,$ref);
 
                 if ($result == true) {
                     $this->session->set_flashdata('success', 'Dossier modifier avec succès');
@@ -202,9 +204,10 @@ class Dossier extends BaseController
     function deleteDossier()
     {
 
-        $patient_id = $this->input->post('patientId');
+        $ref = $this->input->post('ref');
+        $patientId = $this->input->post('patientId');
 
-        $result = $this->bm->deleteDossier($patient_id);
+        $result = $this->bm->deleteDossier($ref,$patientId);
 
         if ($result > 0) {
             echo(json_encode(array('status' => TRUE)));
@@ -250,6 +253,21 @@ class Dossier extends BaseController
         $dompdf->stream("List_analyse.pdf", ["Attachment" => true]);
     }
 
+    // Search patients
+    public function search() {
+        $query = $this->input->post('query');
+        $patients = $this->bm->searchPatients($query);
+
+        if (!empty($patients)) {
+            foreach ($patients as $patient) {
+                echo "<li class='patient-option' data-id='{$patient->id}' data-firstName='{$patient->first_name}' data-lastName='{$patient->last_name}' data-age='{$patient->age}' data-phone='{$patient->phone}'>
+                        {$patient->first_name} {$patient->last_name}
+                       </li>";
+            }
+        } else {
+            echo "";
+        }
+    }
+
 }
 
-?>

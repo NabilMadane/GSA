@@ -21,12 +21,14 @@
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
                     <form role="form" id="addDossier" action="<?php echo base_url() ?>dossier/addNewDossier" method="post" role="form">
+                       <input type="hidden" name="patientId" id="patientId">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">                                
                                     <div class="form-group">
                                         <label for="first_name">Nom</label>
                                         <input type="text" class="form-control required" value="<?php echo set_value('first_name'); ?>" id="first_name" name="first_name" maxlength="256" />
+                                        <ul class="styled-list" id="patientList"></ul>
                                     </div>
                                     
                                 </div>
@@ -34,6 +36,21 @@
                                     <div class="form-group">
                                         <label for="last_name">Prénom</label>
                                         <input type="text" class="form-control required" value="<?php echo set_value('last_name'); ?>" id="last_name" name="last_name" maxlength="256" />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="age">Age</label>
+                                        <input type="number" min="1" class="form-control required" value="<?php echo set_value('age'); ?>" id="age" name="age" maxlength="256" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dossier_name">Téléphone</label>
+                                        <input type="text" class="form-control required" value="<?php echo set_value('phone'); ?>" id="phone" name="phone" maxlength="256" />
                                     </div>
 
                                 </div>
@@ -60,20 +77,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="age">Age</label>
-                                        <input type="number" min="1" class="form-control required" value="<?php echo set_value('age'); ?>" id="age" name="age" maxlength="256" />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="dossier_name">Téléphone</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('phone'); ?>" id="phone" name="phone" maxlength="256" />
-                                    </div>
-
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">

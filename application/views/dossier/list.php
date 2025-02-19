@@ -119,10 +119,11 @@
                         <td><?php echo $record->phone ?></td>
                         <td><?php echo $record->description ?></td>
                         <td><?php echo $record->update_date ?></td>
+                        <td><?php echo $record->update_date ?></td>
                         <td><span class="badge btn-primary"><?php echo $record->labo_name ?></span></td>
                         <td class="text-center">
-                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'dossier/edit/'.$record->patient_id ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-sm btn-danger deleteDossier" href="#" data-patientid="<?php echo $record->patient_id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-sm btn-info" href="<?php echo base_url().'dossier/edit/'.$record->ref ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-sm btn-danger deleteDossier" href="#" data-ref="<?php echo $record->ref; ?>" data-patientid="<?php echo $record->patient_id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php } }
