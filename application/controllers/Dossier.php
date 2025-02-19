@@ -105,12 +105,14 @@ class Dossier extends BaseController
                 $analyses = $this->input->post('analyses');
                 $date = $this->input->post('date');
                 $labo = $this->input->post('labos');
+                $reduction = $this->input->post('reduction');
 
 
                 $patientInfo = array('first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'phone' => $phone, 'description' => $description);
+                $dossiertInfo = (object)['reduction' => $reduction, 'date' => $date];
 
 
-                $result = $this->bm->addNewDossier($analyses, $patientInfo,$labo,$date);
+                $result = $this->bm->addNewDossier($analyses, $patientInfo,$labo,$dossiertInfo);
 
                 if ($result > 0) {
                     $this->session->set_flashdata('success', 'Nouveau dossier créé avec succès');
@@ -178,11 +180,13 @@ class Dossier extends BaseController
                 $analyses = $this->input->post('analyses');
                 $date = $this->input->post('date_');
                 $labo = $this->input->post('labos');
+                $reduction = $this->input->post('reduction');
 
                 $patientInfo = array('first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'phone' => $phone, 'description' => $description);
+                $dossiertInfo = (object)['reduction' => $reduction, 'date' => $date];
 
 
-                $result = $this->bm->editDossier($analyses, $patientInfo, $patientId,$labo,$date);
+                $result = $this->bm->editDossier($analyses, $patientInfo, $patientId,$labo,$dossiertInfo);
 
                 if ($result == true) {
                     $this->session->set_flashdata('success', 'Dossier modifier avec succès');

@@ -8,6 +8,7 @@ $phone = $dossierInfo->phone;
 $description = $dossierInfo->description;
 $patientId = $dossierInfo->patient_id;
 $laboId = $dossierInfo->labo_id;
+$reduction = $dossierInfo->reduction;
 
 ?>
 
@@ -89,13 +90,6 @@ $laboId = $dossierInfo->labo_id;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="age">Date</label>
-                                        <input type="text" class="form-control required" value="<?= $date ?>" id="date_" name="date_"/>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label for="dossier_name">Téléphone</label>
                                         <input type="text" class="form-control required" value="<?= $phone ?>" id="phone" name="phone" maxlength="256" />
                                     </div>
@@ -105,6 +99,19 @@ $laboId = $dossierInfo->labo_id;
                                     <div class="form-group">
                                         <label for="description">Observation</label>
                                         <textarea class="form-control required" id="description" name="description"><?= $description ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="age">Date</label>
+                                        <input type="text" class="form-control required" value="<?= $date ?>" id="date_" name="date_"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="reduction">Réduction</label>
+                                    <div class="input-group">
+                                        <input type="number" min="0" class="form-control" id="reduction" name="reduction" value="<?= $reduction ?>">
+                                        <span class="input-group-addon">DH</span>
                                     </div>
                                 </div>
                             </div>

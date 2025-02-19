@@ -101,14 +101,14 @@ class Dossier_model extends CI_Model
      * This function is used to add new dossier to system
      * @return number $insert_id : This is last inserted id
      */
-    function addNewDossier($analyses,$patientInfo,$labo,$date)
+    function addNewDossier($analyses,$patientInfo,$labo,$dossiertInfo)
     {
         $this->db->trans_start();
         $this->db->insert('patients', $patientInfo);
 
         $patient_id = $this->db->insert_id();
 
-        $_date = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+        $_date = DateTime::createFromFormat('d-m-Y', $dossiertInfo->date)->format('Y-m-d');
 
         foreach ($analyses as $analyse){
             $data = [
@@ -116,6 +116,7 @@ class Dossier_model extends CI_Model
                 'analyse_id'=>$analyse,
                 'labo_id'=>$labo,
                 'date_update'=>$_date,
+                'reduction'=>$dossiertInfo->reduction,
             ];
             $this->db->insert('dossiers', $data);
 
@@ -136,7 +137,7 @@ class Dossier_model extends CI_Model
 
     function getDossierInfo($patient_id)
     {
-        $this->db->select('a.id,a.patient_id,a.labo_id,a.date_update, p.first_name, p.last_name,p.age, p.phone, p.description',);
+        $this->db->select('a.*, p.first_name, p.last_name,p.age, p.phone, p.description',);
         $this->db->from('dossiers as a');
         $this->db->join('patients as p', 'a.patient_id = p.id',);
         $this->db->where('a.patient_id', $patient_id);
@@ -162,7 +163,7 @@ class Dossier_model extends CI_Model
      * @param array $dossierInfo : This is dossier updated information
      * @param number $dossierId : This is dossier id
      */
-    function editDossier($analyses, $patientInfo,$patientId,$labo,$date)
+    function editDossier($analyses, $patientInfo,$patientId,$labo,$dossiertInfo)
     {
         // Start the transaction
         $this->db->trans_start();
@@ -181,7 +182,7 @@ class Dossier_model extends CI_Model
             $this->db->trans_rollback();
             return FALSE;
         }
-        $_date = DateTime::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+        $_date = DateTime::createFromFormat('d-m-Y', $dossiertInfo->date)->format('Y-m-d');
         if (!empty($analyses)) {
             foreach ($analyses as $analyse) {
                 $data = [
@@ -189,6 +190,7 @@ class Dossier_model extends CI_Model
                     'analyse_id' => $analyse,
                     'labo_id' => $labo,
                     'date_update' => $_date,
+                    'reduction' => $dossiertInfo->reduction,
                 ];
                 $this->db->insert('dossiers', $data);
             }
@@ -235,7 +237,7 @@ class Dossier_model extends CI_Model
                CONCAT(p.first_name, ' ', p.last_name) AS full_name, 
                GROUP_CONCAT(a.analyse_name SEPARATOR ', ') AS analyses_names,
                p.age, p.phone, p.description, 
-               SUM(a.analyse_price) AS price,
+               SUM(a.analyse_price) - d.reduction AS price,
                DATE_FORMAT(d.date_update, '%d/%m/%Y') AS update_date
         FROM dossiers AS d
         JOIN analyses AS a ON a.id = d.analyse_id

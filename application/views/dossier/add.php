@@ -64,17 +64,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="age">Age</label>
-                                        <input type="number" class="form-control required" value="<?php echo set_value('age'); ?>" id="age" name="age" maxlength="256" />
+                                        <input type="number" min="1" class="form-control required" value="<?php echo set_value('age'); ?>" id="age" name="age" maxlength="256" />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="date">Date</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('date'); ?>" id="date" name="date" />
-                                    </div>
-
-                                </div>
-
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -87,6 +79,19 @@
                                     <div class="form-group">
                                         <label for="description">Observation</label>
                                         <textarea class="form-control required" id="description" name="description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date">Date</label>
+                                        <input type="text" class="form-control required" value="<?php echo set_value('date'); ?>" id="date" name="date" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="reduction">Réduction</label>
+                                    <div class="input-group">
+                                        <input type="number" min="0" class="form-control" id="reduction" name="reduction" value="<?php echo set_value('reduction'); ?>">
+                                        <span class="input-group-addon">DH</span>
                                     </div>
                                 </div>
                             </div>

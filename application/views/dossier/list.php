@@ -99,6 +99,7 @@
                         <th>age</th>
                         <th>Analyses</th>
                         <th>prix</th>
+                        <th>Réduction</th>
                         <th>Numéro téléphone</th>
                         <th>Observation</th>
                         <th>Date</th>
@@ -114,6 +115,7 @@
                         <td><?php echo $record->age ?></td>
                         <td><?php echo $record->analyses_names ?></td>
                         <td><?php echo $record->price ?></td>
+                        <td><?php echo $record->reduction ?></td>
                         <td><?php echo $record->phone ?></td>
                         <td><?php echo $record->description ?></td>
                         <td><?php echo $record->update_date ?></td>
